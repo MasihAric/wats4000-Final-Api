@@ -1,19 +1,16 @@
 <template>
-  <div class="rhymesaurus">
-    <h2>Rhymesaurus: The Rhyming Thesaurus</h2>
-    <p>
-      <router-link to="/adjfornoun">Adjective For Noun!</router-link>
-    </p>
-    <form v-on:submit.prevent="findWords">
+  <div class="movieTitle">
+    <h2>Get information on your favorite Movie!</h2>
+    <form v-on:submit.prevent="findMovies">
       <p>
-        Find rhymes for
-        <input type="text" v-model="rhyme"> related to
-        <input type="text" v-model="phrase">
-        <button type="submit">Search</button>
+        Enter Movie Title
+        <input type="text" v-model="title"> 
+         <button type="submit"> Search</button>
       </p>
     </form>
+    {{results}}   
     <ul class="results" v-if="results && results.length > 0">
-      <li class="item" v-for="(item,index) of results" :key="index">
+      <!-- <li class="item" v-for="(item,index) of results" :key="index">
         <p>
           <strong>
             {{item.word}}
@@ -22,10 +19,10 @@
         <p>
           {{item.score}}
         </p>
-      </li>
+      </li> -->
     </ul>
     <div class="no-results" v-else-if="results && results.length === 0">
-      <h2>No Words Found</h2>
+      <h2>No title Found</h2>
       <p>Please adjust your search to find more words.</p>
     </div>
     <ul class="errors" v-if="errors && errors.length > 0">
@@ -39,21 +36,20 @@
 <script>
 import axios from 'axios'
 export default {
-  name: "Rhymesaurus",
+  name: "movieTitle",
   data() {
     return {
       results: null,
       errors: [],
-      phrase: "",
-      rhyme: ""
+      title: ""
     }
   },
   methods: {
-    findWords: function () {
-      axios.get('https://api.datamuse.com/words', {
+    findMovies: function () {
+      axios.get('https://api.themoviedb.org/3/movie/550', {
         params: {
-          ml: this.phrase,
-          rel_rhy: this.rhyme
+          apikey: "21140d8743f0486b11db9d2bbd4e198d",
+          search: this.title
         }
       })
       .then(response =>{
@@ -69,7 +65,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.rhymesaurus {
+.movieTitle {
   font-size: 1.4rem;
 }
 

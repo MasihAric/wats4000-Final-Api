@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Rhymesaurus from '@/views/Rhymesaurus'
-import AdjForNoun from '@/views/AdjForNoun'
+import MovieTitle from '@/views/MovieTitle'
+import MovieDetails from '@/views/MovieDetails'
 
 Vue.use(Router)
 
@@ -9,13 +9,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Rhymesaurus',
-      component: Rhymesaurus
+      name: 'movieTitle',
+      component: MovieTitle
     },
     {
-      path: '/adjfornoun',
-      name: 'adjfornoun',
-      component: AdjForNoun
+      path: '/MovieDetails',
+      name: 'movieDetails',
+      component: MovieDetails
     }
   ]
 })

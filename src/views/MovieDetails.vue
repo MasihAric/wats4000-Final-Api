@@ -1,12 +1,12 @@
 <template>
-  <div class="adjfornoun">
+  <div class="movieDetails">
     <h2>Adjective for Noun.</h2>
         <p>
-      <router-link to="/">Rhymesaurus!</router-link>
+      <router-link to="/">Movie Title</router-link>
     </p>
     <form v-on:submit.prevent="findWords">
       <p>
-        Find an Adjective for a given noun.
+        Find more information about the mvoie.
         <input type="text" v-model="noun"> 
         <button type="submit">Search</button>
       </p>
@@ -38,7 +38,7 @@
 <script>
 import axios from 'axios';
 export default {
-  name: "adjfornoun",
+  name: "movieDetails",
   data() {
     return {
       results: null,
@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     findWords: function () {
-      axios.get('https://api.datamuse.com/words', {
+      axios.get('https://api.themoviedb.org/3/movie/550', {
         params: {
           rel_jjb: this.noun
         }
