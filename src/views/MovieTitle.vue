@@ -12,11 +12,11 @@
       <li class="item" v-for="(item,index) of results" :key="index">
         <p>
           <strong>
-            {{results.item.title}}
+            {{item.title}}
           </strong>
         </p>
         <p>
-          {{results.overiew}}
+          {{item.overview}}
         </p>
       </li>
     </ul>
@@ -52,7 +52,7 @@ export default {
         }
       })
       .then(response =>{
-        this.results = response.data
+        this.results = response.data.results
       })
       .catch(error => {
         this.errors.push(error)
@@ -73,7 +73,7 @@ input[type="text"] {
   border-left: none;
   border-right: none;
   border-bottom: 1px solid #333;
-  width: 300px;
+  width: 100px;
   font-size: 1.4rem;
   color: #2c3e50;
   font-weight: 300;
@@ -88,6 +88,7 @@ button {
   border: none;
   cursor: pointer;
   font-size: 1.4rem;
+  margin: 0 0 0 10px;
 }
 h1,
 h2 {
@@ -104,10 +105,14 @@ ul.results {
   margin: 10px;
   border: solid 1px #333;
   padding: 0.5rem;
-  width: 200px;
-  min-height: 100px;
+  width: 300px;
+  height: 275px;
+  overflow-y: auto;
   color: #fff;
   background: rgba(0, 0, 0, 0.7);
+}
+.results p{
+  font-size: 1rem;
 }
 ul.errors {
   list-style-type: none;
