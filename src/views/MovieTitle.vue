@@ -7,19 +7,18 @@
         <input type="text" v-model="title"> 
          <button type="submit"> Search</button>
       </p>
-    </form>
-    {{results}}   
+    </form>   
     <ul class="results" v-if="results && results.length > 0">
-      <!-- <li class="item" v-for="(item,index) of results" :key="index">
+      <li class="item" v-for="(item,index) of results" :key="index">
         <p>
           <strong>
-            {{item.word}}
+            {{results.item.title}}
           </strong>
         </p>
         <p>
-          {{item.score}}
+          {{results.overiew}}
         </p>
-      </li> -->
+      </li>
     </ul>
     <div class="no-results" v-else-if="results && results.length === 0">
       <h2>No title Found</h2>
@@ -41,15 +40,15 @@ export default {
     return {
       results: null,
       errors: [],
-      title: ""
+      title: ''
     }
   },
   methods: {
     findMovies: function () {
-      axios.get('https://api.themoviedb.org/3/movie/550', {
+      axios.get('https://api.themoviedb.org/3/search/movie', {
         params: {
-          apikey: "21140d8743f0486b11db9d2bbd4e198d",
-          search: this.title
+          api_key: "21140d8743f0486b11db9d2bbd4e198d",
+          query: this.title
         }
       })
       .then(response =>{
