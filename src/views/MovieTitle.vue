@@ -34,6 +34,7 @@
 
 <script>
 import axios from 'axios'
+import FavoriteMvoie from "@/components/FavoriteMovie";
 export default {
   name: "movieTitle",
   data() {
