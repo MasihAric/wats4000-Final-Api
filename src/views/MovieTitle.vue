@@ -4,19 +4,19 @@
     <form v-on:submit.prevent="findMovies">
       <p>
         Enter Movie Title
-        <input type="text" v-model="title"> 
-         <button type="submit"> Search</button>
+        <input type="text" v-model="title">
+        <button type="submit">Search</button>
       </p>
-    </form>   
+    </form>
     <ul class="results" v-if="results && results.length > 0">
       <li class="item" v-for="(item,index) of results" :key="index">
         <p>
-          <strong>
-            {{item.title}}
-          </strong>
+          <strong>{{item.title}}</strong>
         </p>
+        <!-- <p>{{item.overview}}</p> -->
+        <p><img v-bind:src="'http://image.tmdb.org/t/p/w150_and_h225_bestv2' + item.poster_path"></p>
         <p>
-          {{item.overview}}
+          <router-link :to="{ name: 'movieDetails', params:{overview: item.overview, popularity: item.popularity} }">Click</router-link>
         </p>
       </li>
     </ul>
@@ -25,42 +25,41 @@
       <p>Please adjust your search to find more words.</p>
     </div>
     <ul class="errors" v-if="errors && errors.length > 0">
-      <li v-for="(error, index) of errors" :key="index">
-        {{error.message}}
-      </li>
+      <li v-for="(error, index) of errors" :key="index">{{error.message}}</li>
     </ul>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import FavoriteMvoie from "@/components/FavoriteMovie";
+import axios from "axios";
 export default {
   name: "movieTitle",
   data() {
     return {
       results: null,
       errors: [],
-      title: ''
-    }
+      title: '',
+      poster_path: ''
+    };
   },
   methods: {
-    findMovies: function () {
-      axios.get('https://api.themoviedb.org/3/search/movie', {
-        params: {
-          api_key: "21140d8743f0486b11db9d2bbd4e198d",
-          query: this.title
-        }
-      })
-      .then(response =>{
-        this.results = response.data.results
-      })
-      .catch(error => {
-        this.errors.push(error)
-      });
+    findMovies: function() {
+      axios
+        .get("https://api.themoviedb.org/3/search/movie", {
+          params: {
+            api_key: "21140d8743f0486b11db9d2bbd4e198d",
+            query: this.title
+          }
+        })
+        .then(response => {
+          this.results = response.data.results;
+        })
+        .catch(error => {
+          this.errors.push(error);
+        });
     }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -107,12 +106,12 @@ ul.results {
   border: solid 1px #333;
   padding: 0.5rem;
   width: 300px;
-  height: 275px;
+  height: 330px;
   overflow-y: auto;
   color: #fff;
   background: rgba(0, 0, 0, 0.7);
 }
-.results p{
+.results p {
   font-size: 1rem;
 }
 ul.errors {

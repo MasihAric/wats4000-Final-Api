@@ -1,72 +1,39 @@
 <template>
   <div class="movieDetails">
-    <h2>Adjective for Noun.</h2>
-        <p>
+    <h2>Get plot details.</h2>
+    <p>
       <router-link to="/">Movie Title</router-link>
     </p>
-    <form v-on:submit.prevent="findWords">
-      <p>
-        Find more information about the mvoie.
-        <input type="text" v-model="noun"> 
-        <button type="submit">Search</button>
-      </p>
-    </form>
-    <ul class="results" v-if="results && results.length > 0">
-      <li class="item" v-for="(item,index) of results" :key="index">
-        <p>
-          <strong>
-            {{item.word}}
-          </strong>
-        </p>
-        <p>
-          {{item.score}}
-        </p>
-      </li>
-    </ul>
-    <div class="no-results" v-else-if="results && results.length === 0">
-      <h2>No Words Found</h2>
-      <p>Please adjust your search to find more words.</p>
-    </div>
+    <p>
+      <strong>{{overview}}</strong>
+    </p>
+    <p>{{popularity}}</p>
     <ul class="errors" v-if="errors && errors.length > 0">
-      <li v-for="(error, index) of errors" :key="index">
-        {{error.message}}
-      </li>
+      <li v-for="(error, index) of errors" :key="index">{{error.message}}</li>
     </ul>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
 export default {
   name: "movieDetails",
   data() {
     return {
-      results: null,
-      errors: [],
-      noun: '',
-    }
+      overview: null,
+      popularity: null,
+      errors: []
+    };
   },
-  methods: {
-    findWords: function () {
-      axios.get('https://api.themoviedb.org/3/movie/550', {
-        params: {
-          rel_jjb: this.noun
-        }
-      })
-      .then(response =>{
-        this.results = response.data
-      })
-      .catch(error => {
-        this.errors.push(error)
-      });
-    }
+  created: function() {
+    this.overview = this.$route.params.overview;
+    this.popularity = this.$route.params.popularity;
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.adjfornoun {
+.moviedetails {
   font-size: 1.4rem;
 }
 
